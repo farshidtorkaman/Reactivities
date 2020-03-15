@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import { Item, Button, Label, Segment } from 'semantic-ui-react'
 import { observer } from 'mobx-react-lite'
 import ActivityStore from '../../../app/stores/activityStore'
+import { Link } from 'react-router-dom'
 
 const ActivityList: React.FC = () => {
     const activityStore = useContext(ActivityStore)
-    const { activitiesByDate, selectActivity, deleteActivity, submitting, target } = activityStore
+    const { activitiesByDate, deleteActivity, submitting, target } = activityStore
 
     return (
         <Segment clearing>
@@ -20,7 +21,7 @@ const ActivityList: React.FC = () => {
                                 <div>{activity.city}, {activity.venue}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => selectActivity(activity.id)} floated='right' content='View' color='blue' />
+                                <Button as={Link} to={`/activity/${activity.id}`} floated='right' content='View' color='blue' />
                                 <Button onClick={(e) => deleteActivity(e, activity.id)} name={activity.id} floated='right' content='Delete' loading={target === activity.id && submitting} color='red' />
                                 <Label basic content={activity.category} />
                             </Item.Extra>
